@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analyst Dashboard | FraudGuard AI</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <i class="fa-solid fa-shield-virus"></i> FraudGuard<span>.AI</span>
+    </div>
+
+    <ul class="nav-links">
+      <li class="nav-item active" data-tab="overview">
+        <a href="#"><i class="fa-solid fa-chart-line"></i> Overview</a>
+      </li>
+      <li class="nav-item" data-tab="transactions">
+        <a href="#"><i class="fa-solid fa-list-ul"></i> Live Transactions</a>
+      </li>
+      <li class="nav-item" data-tab="behavior">
+        <a href="#"><i class="fa-solid fa-users"></i> User Behavior</a>
+      </li>
+      <li class="nav-item" data-tab="alerts">
+        <a href="#"><i class="fa-solid fa-flag"></i> Flagged Alerts <span class="nav-badge" id="alert-badge">3</span></a>
+      </li>
+      <li class="nav-item" data-tab="settings">
+        <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <a href="webpage.html" class="home-link"><i class="fa-solid fa-globe"></i> Return to Website</a>
+    </div>
+
+    <div class="user-profile">
+      <div class="user-avatar">AD</div>
+      <div class="user-info">
+        <h4>Admin User</h4>
+        <p>Security Analyst</p>
+      </div>
+      <a href="login.html" class="logout-btn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <header>
+      <h2 id="page-title">Security Overview</h2>
+      <div class="header-tools">
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="global-search" placeholder="Search Transaction ID...">
+        </div>
+
+        <div class="tool-wrapper">
+          <button class="btn-icon" id="notif-btn">
+            <i class="fa-solid fa-bell"></i>
+            <span class="indicator"></span>
+          </button>
+          <div class="dropdown-menu hidden" id="notif-dropdown">
+            <div class="dropdown-header">Notifications</div>
+            <div class="dropdown-item unread">High Risk: TXN-998 detected</div>
+            <div class="dropdown-item">System update scheduled</div>
+            <div class="dropdown-item">New dataset uploaded</div>
+          </div>
+        </div>
+
+        <div class="tool-wrapper">
+          <button class="btn-icon" id="msg-btn"><i class="fa-solid fa-envelope"></i></button>
+          <div class="dropdown-menu hidden" id="msg-dropdown">
+            <div class="dropdown-header">Messages</div>
+            <div class="dropdown-item"><strong>Team Lead:</strong> Please review batch #404</div>
+            <div class="dropdown-item"><strong>Support:</strong> Ticket #221 closed</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="overview" class="content-section active">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon icon-blue"><i class="fa-solid fa-database"></i></div>
+          <div class="kpi-text">
+            <p>Total Scanned</p>
+            <h3>1.2M</h3>
+            <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> +12%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon icon-purple"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div class="kpi-text">
+            <p>High Risk Flags</p>
+            <h3>482</h3>
+            <span class="trend negative"><i class="fa-solid fa-arrow-up"></i> +5%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon icon-green"><i class="fa-solid fa-sack-dollar"></i></div>
+          <div class="kpi-text">
+            <p>Fraud Prevented</p>
+            <h3>$4.5M</h3>
+            <span class="trend positive"><i class="fa-solid fa-arrow-up"></i> +8%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon icon-orange"><i class="fa-solid fa-bolt"></i></div>
+          <div class="kpi-text">
+            <p>System Latency</p>
+            <h3>12ms</h3>
+            <span class="trend positive"><i class="fa-solid fa-check"></i> Optimal</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card wide">
+          <div class="chart-header">
+            <h3>Transaction Volume vs Fraud Attempts</h3>
+          </div>
+          <canvas id="mainChart"></canvas>
+        </div>
+        <div class="chart-card narrow">
+          <div class="chart-header">
+            <h3>Risk Distribution</h3>
+          </div>
+          <canvas id="doughnutChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="transactions" class="content-section hidden">
+      <div class="recent-table-section">
+        <h3>Live Transaction Feed</h3>
+        <div class="table-container">
+          <table id="full-txn-table">
+            <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Location</th>
+              <th>Amount</th>
+              <th>Risk Score</th>
+              <th>AI Verdict</th>
+              <th>Timestamp</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="txn-table-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="behavior" class="content-section hidden">
+      <div class="chart-card">
+        <h3>User Behavior Analytics</h3>
+        <p style="color:var(--text-muted); margin-bottom: 20px;">Analysis of login locations and spending habits.</p>
+        <canvas id="behaviorChart" style="max-height: 400px;"></canvas>
+      </div>
+    </section>
+
+    <section id="alerts" class="content-section hidden">
+      <div class="recent-table-section">
+        <h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger)"></i> Critical Alerts</h3>
+        <div class="table-container">
+          <table>
+            <thead>
+            <tr>
+              <th>Alert ID</th>
+              <th>Severity</th>
+              <th>Description</th>
+              <th>Assignee</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>ALT-001</td>
+              <td><span class="status-badge critical">Critical</span></td>
+              <td>Multiple failed login attempts (IP: 192.168.1.1)</td>
+              <td>System</td>
+              <td><button class="action-btn">Resolve</button></td>
+            </tr>
+            <tr>
+              <td>ALT-002</td>
+              <td><span class="status-badge critical">Critical</span></td>
+              <td>Large withdrawal from dormant account</td>
+              <td>Unassigned</td>
+              <td><button class="action-btn">Resolve</button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="settings" class="content-section hidden">
+      <div class="settings-container">
+        <div class="kpi-card">
+          <h3>System Preferences</h3>
+          <form style="width: 100%; margin-top: 20px;">
+            <div class="form-group">
+              <label>Notification Email</label>
+              <input type="email" value="admin@fraudguard.ai" style="width:100%; padding:10px; background:rgba(0,0,0,0.2); border:1px solid #333; color:white;">
+            </div>
+            <div class="form-group" style="margin-top:15px; display:flex; gap:10px; align-items:center;">
+              <input type="checkbox" checked> <label>Enable Real-time Email Alerts</label>
+            </div>
+            <div class="form-group" style="margin-top:10px; display:flex; gap:10px; align-items:center;">
+              <input type="checkbox" checked> <label>Dark Mode</label>
+            </div>
+            <button type="button" class="btn-primary" style="margin-top:20px; padding:10px 20px; border:none; cursor:pointer;">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudGuard AI | Next-Gen Security</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="webpage.css">
+</head>
+<body>
+
+<canvas id="neural-canvas"></canvas>
+
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-shield-virus"></i> FraudGuard<span>.AI</span>
+    </div>
+    <div class="nav-buttons">
+        <a href="dashboard.html" class="btn btn-text">Dashboard</a>
+
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Get Started</a>
+    </div>
+</nav>
+
+<section class="hero hidden-scroll">
+    <div class="hero-content">
+        <div class="badge">v2.0 Model Live</div>
+        <h1>Detect Fraud with <br><span class="glitch-text" data-text="Neural Precision">Neural Precision</span></h1>
+        <p>Stop suspicious financial activity before it happens. Our AI analyzes behavioral patterns in milliseconds to flag anomalies.</p>
+
+        <div class="hero-actions">
+            <a href="#analysis" class="btn btn-primary btn-lg">Start Scanning <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="dashboard.html" class="btn btn-outline btn-lg">View Live Demo</a>
+        </div>
+    </div>
+
+    <div class="stats-container hidden-scroll" id="stats-section">
+        <div class="stat-box">
+            <h3 class="counter" data-target="1240">0</h3>
+            <p>Datasets Trained</p>
+        </div>
+        <div class="stat-box">
+            <h3 class="counter" data-target="99">0</h3>
+            <p>% Accuracy Rate</p>
+        </div>
+        <div class="stat-box">
+            <h3 class="counter" data-target="5000">0</h3>
+            <p>Threats Blocked</p>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="features-section hidden-scroll">
+    <div class="section-header">
+        <h2>Why Choose FraudGuard?</h2>
+        <div class="underline"></div>
+    </div>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <i class="fa-solid fa-bolt"></i>
+            <h3>Real-Time Latency</h3>
+            <p>Analysis completed in under 200ms using edge computing.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-lock"></i>
+            <h3>End-to-End Encryption</h3>
+            <p>Your financial data is hashed using SHA-256 before analysis.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-network-wired"></i>
+            <h3>Deep Learning</h3>
+            <p>Self-improving algorithms that adapt to new fraud tactics daily.</p>
+        </div>
+    </div>
+</section>
+
+<section class="process-section hidden-scroll">
+    <div class="section-header">
+        <h2>Workflow Architecture</h2>
+    </div>
+    <div class="cards-container">
+        <div class="card">
+            <div class="icon-box"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <h3>1. Ingestion</h3>
+            <p>Raw transaction data is uploaded securely.</p>
+        </div>
+        <div class="connector-line"></div>
+        <div class="card">
+            <div class="icon-box"><i class="fa-solid fa-microchip"></i></div>
+            <h3>2. Processing</h3>
+            <p>AI compares data against 5M+ fraud scenarios.</p>
+        </div>
+        <div class="connector-line"></div>
+        <div class="card">
+            <div class="icon-box"><i class="fa-solid fa-circle-check"></i></div>
+            <h3>3. Verdict</h3>
+            <p>Immediate Pass/Fail flag is returned.</p>
+        </div>
+    </div>
+</section>
+
+<section class="analysis-section hidden-scroll" id="analysis">
+    <div class="section-header">
+        <h2>Live Model Test Environment</h2>
+        <p>Input transaction details below to trigger the inference engine.</p>
+    </div>
+
+    <div class="input-container">
+        <div class="input-box manual-input">
+            <h3><i class="fa-solid fa-terminal"></i> Manual Parameters</h3>
+            <form id="transaction-form">
+                <div class="form-group">
+                    <label for="txn-id">Transaction ID</label>
+                    <input type="text" id="txn-id" placeholder="e.g. TXN-8842-A" required>
+                </div>
+                <div class="form-group">
+                    <label for="txn-amount">Amount ($)</label>
+                    <input type="number" id="txn-amount" placeholder="e.g. 2500.00" required>
+                </div>
+                <div class="form-group">
+                    <label for="txn-location">Geolocation</label>
+                    <input type="text" id="txn-location" placeholder="e.g. London, UK">
+                </div>
+                <button type="submit" class="btn btn-full">Run Analysis <i class="fa-solid fa-rocket"></i></button>
+            </form>
+        </div>
+
+        <div class="input-box upload-input">
+            <h3><i class="fa-solid fa-upload"></i> Batch Dataset</h3>
+            <div class="drop-zone" id="drop-zone">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <p>Drag CSV file here or click to browse</p>
+                <input type="file" id="file-input" hidden accept=".csv">
+                <button type="button" class="btn btn-small" id="browse-btn">Select File</button>
+            </div>
+            <div id="file-info" class="file-info hidden"></div>
+            <button class="btn btn-full" id="upload-analyze-btn" disabled>Process Batch</button>
+        </div>
+    </div>
+</section>
+
+<section class="trusted-by hidden-scroll">
+    <p>TRUSTED BY SECURITY TEAMS AT</p>
+    <div class="logos">
+        <span>FINCORP</span>
+        <span>SECURE.IO</span>
+        <span>GLOBAL BANK</span>
+        <span>DATAFLOW</span>
+    </div>
+</section>
+
+<div id="loader-overlay" class="loader-overlay hidden">
+    <div class="loader-content">
+        <div class="scanner-line"></div>
+        <div class="spinner"></div>
+        <h3>Analyzing Pattern...</h3>
+        <p id="loading-text">Connecting to Neural Network...</p>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <h2>FraudGuard.AI</h2>
+            <p>Protecting the digital economy.</p>
+        </div>
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">API Docs</a>
+            <a href="#">Contact</a>
+        </div>
+    </div>
+    <p class="copyright">&copy; 2025 FraudGuard AI Project. All rights reserved.</p>
+</footer>
+
+<script src="webpage.js"></script>
+</body>
+</html>
