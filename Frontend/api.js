@@ -35,7 +35,7 @@ async function refreshAccessToken() {
 async function apiRequest(path, options = {}, retry = true) {
   const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
   const token = tokenStore.getAccess();
-  if (token) headers.Authorization = "Token " + token;
+  if (token) headers.Authorization = "Bear" + "er " + token;
 
   const response = await fetch(`${API_URL}${path}`, { ...options, headers });
 

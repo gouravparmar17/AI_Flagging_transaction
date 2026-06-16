@@ -15,6 +15,7 @@ METRICS_PATH = MODEL_DIR / "model_metrics.json"
 
 RISKY_MERCHANTS = {"unknown", "crypto_exchange", "offshore_transfer"}
 RISKY_LOCATIONS = {"unknown", "high_risk_zone"}
+HIGH_AMOUNT_BASELINE = 50000.0
 
 
 class FraudScoringService:
@@ -65,7 +66,7 @@ class FraudScoringService:
         if cls.model is not None:
             probability = float(cls.model.predict_proba(features)[0][1])
         else:
-            amount_factor = min(float(payload.get("amount", 0)) / 50000.0, 1.0)
+            amount_factor = min(float(payload.get("amount", 0)) / HIGH_AMOUNT_BASELINE, 1.0)
             online_factor = 0.2 if str(payload.get("transaction_type", "")).lower() == "online" else 0.0
             probability = max(0.01, min(0.99, amount_factor + online_factor))
 
