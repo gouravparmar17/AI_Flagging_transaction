@@ -18,7 +18,7 @@ class TransactionApiTests(APITestCase):
         login = self.client.post(
             "/api/auth/login/", {"email": "u1@example.com", "password": "StrongPass123"}, format="json"
         )
-        self.client.credentials(HTTP_AUTHORIZATION="Token " + login.data["access_token"])
+        self.client.credentials(HTTP_AUTHORIZATION="Bearer " + login.data["access_token"])
 
     def test_create_transaction_auto_creates_prediction(self):
         response = self.client.post(

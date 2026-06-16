@@ -9,15 +9,16 @@ from .serializers import TransactionSerializer
 
 class TransactionListCreateView(generics.ListCreateAPIView):
     serializer_class = TransactionSerializer
-    prediction_payload = None
 
     def get_queryset(self):
         return Transaction.objects.filter(user=self.request.user)
 
-    def perform_create(self, serializer):
-        transaction = serializer.save(user=self.request.user)
-        prediction, score = create_prediction_for_transaction(self.request.user, transaction)
-        self.prediction_payload = {
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        transaction = serializer.save(user=request.user)
+        prediction, score = create_prediction_for_transaction(request.user, transaction)
+        payload = {
             "transaction": TransactionSerializer(transaction).data,
             "prediction": {
                 "id": prediction.id,
@@ -28,12 +29,7 @@ class TransactionListCreateView(generics.ListCreateAPIView):
                 "severity": score["severity"],
             },
         }
-
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        if self.prediction_payload is None:
-            return response
-        return Response(self.prediction_payload, status=status.HTTP_201_CREATED)
+        return Response(payload, status=status.HTTP_201_CREATED)
 
 
 class TransactionDetailView(generics.RetrieveDestroyAPIView):

@@ -1,4 +1,5 @@
 const API_URL = "http://127.0.0.1:8000/api";
+const AUTH_SCHEME = "Bearer ";
 
 const tokenStore = {
   getAccess: () => localStorage.getItem("access_token"),
@@ -35,7 +36,7 @@ async function refreshAccessToken() {
 async function apiRequest(path, options = {}, retry = true) {
   const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
   const token = tokenStore.getAccess();
-  if (token) headers.Authorization = "Bear" + "er " + token;
+  if (token) headers.Authorization = AUTH_SCHEME + token;
 
   const response = await fetch(`${API_URL}${path}`, { ...options, headers });
 
