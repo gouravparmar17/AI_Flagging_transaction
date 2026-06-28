@@ -1,0 +1,14 @@
+Django==6.0.6
+djangorestframework==3.17.1
+djangorestframework-simplejwt==5.5.1
+django-cors-headers==4.9.0
+django-filter==25.2
+python-dotenv==1.2.2
+psycopg2-binary==2.9.10
+pandas==3.0.3
+numpy==2.4.6
+scikit-learn==1.9.0
+joblib==1.5.3
+xgboost==3.2.0
+reportlab==4.5.1
+openpyxl==3.1.5
